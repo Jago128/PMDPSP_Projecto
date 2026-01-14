@@ -4,7 +4,7 @@ package eus.tartanga.psp.PMD_PSP;
  * Hello world!
  *
  */
-public class App
+public class Main
 {
     public static void main( String[] args )
     {
