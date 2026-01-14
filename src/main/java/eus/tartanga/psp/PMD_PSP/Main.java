@@ -1,13 +1,11 @@
 package eus.tartanga.psp.PMD_PSP;
 
-/**
- * Hello world!
- *
- */
-public class Main
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
-    }
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class Main {
+	public static void main(String[] args) {
+		SpringApplication.run(Main.class, args);
+	}
 }
