@@ -7,6 +7,22 @@ public class User {
 	private String contraseña;
 	private Genero genero;
 	private Dispositivo dispositivo;
+	
+	public User() {
+		this.nombre = "";
+		this.email = "";
+		this.contraseña = "";
+		this.genero = Genero.OTRO;
+		this.dispositivo = Dispositivo.MOVIL;
+	}
+
+	public User(String nombre, String email, String contraseña, Genero genero, Dispositivo dispositivo) {
+		this.nombre = nombre;
+		this.email = email;
+		this.contraseña = contraseña;
+		this.genero = genero;
+		this.dispositivo = dispositivo;
+	}
 
 	public String getNombre() {
 		return nombre;
