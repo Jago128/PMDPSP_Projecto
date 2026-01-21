@@ -9,6 +9,7 @@ public class Game {
 	private double valoracion_media;
 	private String aviso;
 	private ArrayList<Reseña> reseñas;
+	private String hash;
 	
 	public Game() {
 		this.nombre = "";
@@ -16,14 +17,16 @@ public class Game {
 		this.valoracion_media = 0;
 		this.aviso = "";
 		this.reseñas = new ArrayList<>();
+		this.hash = "";
 	}
 
-	public Game(String nombre, String descripcion, double valoracion_media, String aviso, ArrayList<Reseña> reseñas) {
+	public Game(String nombre, String descripcion, double valoracion_media, String aviso, ArrayList<Reseña> reseñas, String hash) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.valoracion_media = valoracion_media;
 		this.aviso = aviso;
 		this.reseñas = reseñas;
+		this.hash = hash;
 	}
 
 	public String getNombre() {
@@ -66,9 +69,17 @@ public class Game {
 		this.reseñas = reseñas;
 	}
 
+	public String getHash() {
+		return hash;
+	}
+
+	public void setHash(String hash) {
+		this.hash = hash;
+	}
+
 	@Override
 	public String toString() {
 		return "Game [nombre=" + nombre + ", descripcion=" + descripcion + ", valoracion_media=" + valoracion_media
-				+ ", aviso=" + aviso + ", reseña=" + reseñas + "]";
+				+ ", aviso=" + aviso + ", reseñas=" + reseñas + ", hash=" + hash + "]";
 	}
 }

@@ -31,12 +31,12 @@ public class Service {
 		}
 	}
 
-	public ArrayList<Reseña> getGameReviews(Game game) {
+	public ArrayList<Reseña> getGameReviews(String gameN) {
 		boolean exists = false;
 		int index = 0;
 
 		for (int i = 0; i < games.size() && !exists; i++) {
-			if (game.equals(game)) {
+			if (games.get(i).getNombre().equalsIgnoreCase(gameN)) {
 				exists = true;
 				index = i;
 			}
@@ -49,15 +49,47 @@ public class Service {
 		}
 	}
 
-	public boolean addUser(String nom, String email, String pass, Genero gender, Dispositivo device) {
+	public boolean addUser(String nom, String email, String pass, String genderSet, String deviceSet) throws IllegalArgumentException {
 		boolean exists = false;
+		Genero gender = null;
+		Dispositivo device = null;
 		for (int i = 0; i < users.size(); i++) {
 			if (users.get(nom).getNombre().equalsIgnoreCase(nom)) {
 				exists = true;
 			}
 		}
 
-		if (nom.isBlank() || pass.isBlank() || gender == null || device == null || exists) {
+		switch (genderSet) {
+		case "Hombre":
+			gender = Genero.HOMBRE;
+			break;
+			
+		case "Mujer":
+			gender = Genero.MUJER;
+			break;
+			
+		case "Otro":
+			gender = Genero.OTRO;
+			break;
+			
+			default:
+				throw new IllegalArgumentException();
+		}
+		
+		switch (deviceSet) {
+		case "Tablet":
+			device = Dispositivo.TABLET;
+			break;
+		
+		case "Movil":
+			device = Dispositivo.MOVIL;
+			break;
+			
+		default:
+			throw new IllegalArgumentException();
+		}
+
+		if (nom.isBlank() || pass.isBlank() || genderSet == null || deviceSet == null || exists) {
 			return false;
 		} else {
 			// Site for reference (para borrar en cuanto lo veas, Victor):
@@ -68,12 +100,12 @@ public class Service {
 		}
 	}
 
-	public boolean createReview(Game game, String review, double rating) {
+	public boolean createReview(String review, double rating, String gameN) {
 		boolean check = false;
 		int index = 0;
 
 		for (int i = 0; i < games.size() && !check; i++) {
-			if (game.equals(game)) {
+			if (games.get(i).getNombre().equalsIgnoreCase(gameN)) {
 				check = true;
 				index = i;
 			}
