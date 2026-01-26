@@ -6,6 +6,7 @@ import java.util.regex.*;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import eus.tartanga.psp.PMD_PSP.exceptions.EmailFormatException;
+import eus.tartanga.psp.PMD_PSP.exceptions.WrongHashException;
 import eus.tartanga.psp.PMD_PSP.model.*;
 
 @org.springframework.stereotype.Service
@@ -49,7 +50,30 @@ public class Service {
 		}
 	}
 
-	public boolean addUser(String nom, String email, String pass, String genderSet, String deviceSet) throws IllegalArgumentException {
+	public boolean checkHash(String gameN, String hash) throws WrongHashException {
+		boolean exists = false;
+		Game game = null;
+
+		for (int i = 0; i < games.size() && !exists; i++) {
+			if (games.get(i).getNombre().equalsIgnoreCase(gameN)) {
+				exists = true;
+				game = games.get(i);
+			}
+		}
+
+		if (!exists) {
+			return false;
+		} else {
+			if (game.getHash().equals(hash)) {
+				return true;
+			} else {
+				throw new WrongHashException("Ha occurido un error al descargar el juego.");
+			}
+		}
+	}
+
+	public boolean addUser(String nom, String email, String pass, String genderSet, String deviceSet)
+			throws IllegalArgumentException {
 		boolean exists = false;
 		Genero gender = null;
 		Dispositivo device = null;
@@ -63,28 +87,28 @@ public class Service {
 		case "Hombre":
 			gender = Genero.HOMBRE;
 			break;
-			
+
 		case "Mujer":
 			gender = Genero.MUJER;
 			break;
-			
+
 		case "Otro":
 			gender = Genero.OTRO;
 			break;
-			
-			default:
-				throw new IllegalArgumentException();
+
+		default:
+			throw new IllegalArgumentException();
 		}
-		
+
 		switch (deviceSet) {
 		case "Tablet":
 			device = Dispositivo.TABLET;
 			break;
-		
+
 		case "Movil":
 			device = Dispositivo.MOVIL;
 			break;
-			
+
 		default:
 			throw new IllegalArgumentException();
 		}

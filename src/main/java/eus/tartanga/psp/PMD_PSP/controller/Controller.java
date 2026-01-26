@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import eus.tartanga.psp.PMD_PSP.exceptions.WrongHashException;
 import eus.tartanga.psp.PMD_PSP.model.*;
 import eus.tartanga.psp.PMD_PSP.service.Service;
 
@@ -39,10 +40,17 @@ public class Controller {
 	}
 
 	@GetMapping("/apkHash/{gameName}")
-	public ResponseEntity<ArrayList<Game>> checkHash(@PathVariable String gameN) {
-		// Method goes here
-
-		return null;
+	public ResponseEntity<ArrayList<Game>> checkHash(@PathVariable String gameN, @PathVariable String hash) {
+		try {
+			if (service.checkHash(gameN, hash)) {
+				return null;
+			} else {
+				return null;
+			}
+		} catch (WrongHashException e) {
+			// Message is set, call e.getMessage();
+			return null;
+		}
 	}
 
 	@GetMapping("/gameRatingsAvg/{gameName}")
