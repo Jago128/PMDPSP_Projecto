@@ -4,6 +4,16 @@ public class Reseña {
 
 	private String texto;
 	private double valoracion;
+	
+	public Reseña() {
+		this.texto = "";
+		this.valoracion = 0.1;
+	}
+
+	public Reseña(String texto, double valoracion) {
+		this.texto = texto;
+		this.valoracion = valoracion;
+	}
 
 	public String getTexto() {
 		return texto;
