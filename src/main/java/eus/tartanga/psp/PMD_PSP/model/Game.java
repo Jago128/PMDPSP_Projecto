@@ -77,17 +77,21 @@ public class Game {
 
 	public double getAvgRating() {
 		double avg = 0;
-		
-		if (this.reseñas != null) {
-			for (int i = 0; i < reseñas.size(); i++) {
-				avg += reseñas.get(i).getValoracion()*10;
-			}
+
+		for (int i = 0; i < reseñas.size(); i++) {
+			avg += reseñas.get(i).getValoracion() * 10;
 		}
 
-		if (avg == 0) {
-			return -1;
+		if (reseñas.size() == 0) {
+			return 0;
 		} else {
-			return avg / reseñas.size();
+			avg = avg / reseñas.size();
+			if (avg > 5) {
+				avg = 5;
+			} else if (avg < 0) {
+				avg = 0;
+			}
+			return avg;
 		}
 	}
 
