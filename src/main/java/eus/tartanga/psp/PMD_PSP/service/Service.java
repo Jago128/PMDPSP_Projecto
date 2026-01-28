@@ -1,5 +1,7 @@
 package eus.tartanga.psp.PMD_PSP.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.regex.*;
 
@@ -19,8 +21,27 @@ public class Service {
 		if (games != null) {
 			return games;
 		} else {
-			return null;
+			try {
+				fillData();
+				return games;
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
 		}
+	}
+
+	private void fillData() {
+		games.add(new Game("", "", 1, new File(""))); // Unset image file
+	}
+
+	public String getIcon(String gameN) throws IOException {
+		for (int i = 0; i < games.size(); i++) {
+			if (games.get(i).getNombre().equalsIgnoreCase(gameN)) {
+				return games.get(i).getIcon().getCanonicalPath();
+			}
+		}
+		return null;
 	}
 
 	public void emailFormatCheck(String email) throws EmailFormatException {
@@ -70,6 +91,16 @@ public class Service {
 				throw new WrongHashException("Ha occurido un error al descargar el juego.");
 			}
 		}
+	}
+
+	public double avgRatingGame(String name) {
+		for (int i = 0; i < games.size(); i++) {
+			if (games.get(i).getNombre().equalsIgnoreCase(name)) {
+				return games.get(i).getValoracion_media();
+			}
+		}
+
+		return -1;
 	}
 
 	public boolean addUser(String nom, String email, String pass, String genderSet, String deviceSet)

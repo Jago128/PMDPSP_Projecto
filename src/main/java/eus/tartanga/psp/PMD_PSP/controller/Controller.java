@@ -1,7 +1,12 @@
 package eus.tartanga.psp.PMD_PSP.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,21 +24,30 @@ public class Controller {
 	}
 
 	@GetMapping("/gameList")
-	public ResponseEntity<ArrayList<Game>> getGames() {
+	public ResponseEntity<ArrayList<Game>> getGameList() {
 		// ArrayList<Game> games = service.showGameList();
 
 		return null;
 	}
 
 	@GetMapping("/gameIcon/{gameName}")
-	public ResponseEntity<ArrayList<Game>> getGameIcon(@PathVariable String gameN) {
-		// Method goes here
+	public ResponseEntity<byte[]> getGameIcon(@PathVariable String gameN) {
+		try {
+			ClassPathResource path = new ClassPathResource(service.getIcon(gameN));
+			byte[] image = Files.readAllBytes(path.getFile().toPath());
 
-		return null;
+			org.springframework.http.HttpHeaders header = new org.springframework.http.HttpHeaders();
+			header.setContentType(MediaType.IMAGE_PNG);
+
+			return new ResponseEntity<byte[]>(image, header, HttpStatus.OK);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return ResponseEntity.internalServerError().build();
+		}
 	}
 
 	@GetMapping("/game/{gameName}")
-	public ResponseEntity<ArrayList<Game>> getGameApp(@PathVariable String gameN) {
+	public ResponseEntity<ArrayList<Game>> getGameApk(@PathVariable String gameN) {
 		// Method goes here
 
 		return null;
@@ -54,8 +68,8 @@ public class Controller {
 	}
 
 	@GetMapping("/gameRatingsAvg/{gameName}")
-	public ResponseEntity<ArrayList<Reseña>> getGameRatingAverage() {
-		// Method goes here
+	public ResponseEntity<ArrayList<Reseña>> getGameRatingAverage(@PathVariable String gameN) {
+		// double avg = service.avgRatingGame(gameN);
 
 		return null;
 	}
@@ -63,7 +77,6 @@ public class Controller {
 	@PostMapping("/addUser")
 	public ResponseEntity<ArrayList<Game>> addUser(@PathVariable String nom, @PathVariable String email,
 			@PathVariable String pass, @PathVariable String gender, @PathVariable String device) {
-
 		try {
 			if (service.addUser(nom, email, pass, gender, device)) {
 				return null;

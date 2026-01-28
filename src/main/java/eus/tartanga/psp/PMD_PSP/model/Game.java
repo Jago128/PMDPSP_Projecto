@@ -1,5 +1,6 @@
 package eus.tartanga.psp.PMD_PSP.model;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class Game {
@@ -7,26 +8,18 @@ public class Game {
 	private String nombre;
 	private String descripcion;
 	private double valoracion_media;
-	private String aviso;
 	private ArrayList<Reseña> reseñas;
+	private File icon;
+	// Apk
 	private String hash;
-	
-	public Game() {
-		this.nombre = "";
-		this.descripcion = "";
-		this.valoracion_media = 0;
-		this.aviso = "";
-		this.reseñas = new ArrayList<>();
-		this.hash = "";
-	}
 
-	public Game(String nombre, String descripcion, double valoracion_media, String aviso, ArrayList<Reseña> reseñas, String hash) {
+	public Game(String nombre, String descripcion, double valoracion_media, File icon) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.valoracion_media = valoracion_media;
-		this.aviso = aviso;
-		this.reseñas = reseñas;
-		this.hash = hash;
+		this.reseñas = new ArrayList<>();
+		this.icon = icon;
+		this.hash = "";
 	}
 
 	public String getNombre() {
@@ -53,20 +46,20 @@ public class Game {
 		this.valoracion_media = valoracion_media;
 	}
 
-	public String getAviso() {
-		return aviso;
-	}
-
-	public void setAviso(String aviso) {
-		this.aviso = aviso;
-	}
-
 	public ArrayList<Reseña> getReseñas() {
 		return reseñas;
 	}
 
 	public void setReseñas(ArrayList<Reseña> reseñas) {
 		this.reseñas = reseñas;
+	}
+
+	public File getIcon() {
+		return icon;
+	}
+
+	public void setIcon(File icon) {
+		this.icon = icon;
 	}
 
 	public String getHash() {
@@ -77,9 +70,31 @@ public class Game {
 		this.hash = hash;
 	}
 
+	// method to set hash
+	public void generateHash() {
+		// Can't be done without APK
+	}
+
+	// method to set average rating
+	public double getAvgRating() {
+		double avg = 0;
+		
+		if (this.reseñas != null) {
+			for (int i = 0; i < reseñas.size(); i++) {
+				avg += reseñas.get(i).getValoracion()*10;
+			}
+		}
+
+		if (avg == 0) {
+			return -1;
+		} else {
+			return avg / reseñas.size();
+		}
+	}
+
 	@Override
 	public String toString() {
 		return "Game [nombre=" + nombre + ", descripcion=" + descripcion + ", valoracion_media=" + valoracion_media
-				+ ", aviso=" + aviso + ", reseñas=" + reseñas + ", hash=" + hash + "]";
+				+ ", reseñas=" + reseñas + ", hash=" + hash + "]";
 	}
 }
