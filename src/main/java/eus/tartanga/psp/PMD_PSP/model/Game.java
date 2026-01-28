@@ -70,12 +70,11 @@ public class Game {
 		this.hash = hash;
 	}
 
-	// method to set hash
+	// method to set APK hash
 	public void generateHash() {
 		// Can't be done without APK
 	}
 
-	// method to set average rating
 	public double getAvgRating() {
 		double avg = 0;
 		
