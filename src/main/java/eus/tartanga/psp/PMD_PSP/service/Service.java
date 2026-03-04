@@ -144,7 +144,7 @@ public class Service {
 			throw new IllegalArgumentException();
 		}
 
-		if (nom.isBlank() || pass.isBlank() || genderSet == null || deviceSet == null || exists) {
+		if (nom.isBlank() || pass.isBlank() || genderSet == null || deviceSet == null || !exists) {
 			return false;
 		} else {
 			// Site for reference (para borrar en cuanto lo veas, Victor):
